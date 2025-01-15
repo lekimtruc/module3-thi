@@ -28,15 +28,15 @@ public class MatBangService {
         return matBangDao.listMatBang();
     }
 
-    public MatBang findMatBangByLoaiMatBang(String loaiMatHang){
+    public List<MatBang> findMatBangByLoaiMatBang(String loaiMatHang){
         return matBangDao.findMatBangByLoaiMatBang(loaiMatHang);
     }
 
-    public MatBang findMatBangByGiaTien(double giaTien){
+    public List<MatBang> findMatBangByGiaTien(double giaTien){
         return matBangDao.findMatBangByGiaTien(giaTien);
     }
 
-    public MatBang findMatBangByTang(int tang){
+    public List<MatBang> findMatBangByTang(int tang){
         return matBangDao.findMatBangByTang(tang);
     }
 }

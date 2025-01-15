@@ -29,8 +29,8 @@ public class MatBangController extends HttpServlet {
         String action = req.getServletPath();
         switch (action) {
             case "/matbang":
-//                req.setAttribute("matbang", matBangService.getStudents());
-                req.getRequestDispatcher("/WEB-INF/view/matbang/them_mat_bang.jsp").forward(req, resp);
+                req.setAttribute("matbang", matBangService.listMatBang());
+                req.getRequestDispatcher("/WEB-INF/view/matbang/mat_bang.jsp").forward(req, resp);
                 break;
 
             case "/matbang/them":

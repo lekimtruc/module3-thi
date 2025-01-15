@@ -43,8 +43,8 @@ public class MatBangDao {
         return listMatBang;
     }
 
-    public MatBang findMatBangByLoaiMatBang(String loaiMatBang) {
-        MatBang matBang = new MatBang();
+    public List<MatBang> findMatBangByLoaiMatBang(String loaiMatBang) {
+        listMatBang = new ArrayList<>();
         try {
             Connection connection = JdbcConnection.getConnection();
             String query = "SELECT * " +
@@ -54,6 +54,7 @@ public class MatBangDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
+                MatBang matBang = new MatBang();
                 matBang.setMaMatBang(resultSet.getString("ma_mat_bang"));
                 matBang.setTrangThai(resultSet.getString("trang_thai"));
                 matBang.setDienTich(resultSet.getFloat("dien_tich"));
@@ -62,16 +63,17 @@ public class MatBangDao {
                 matBang.setGiaTien(resultSet.getDouble("gia_tien"));
                 matBang.setNgayBatDau(resultSet.getDate("ngay_bat_dau"));
                 matBang.setNgayKetThuc(resultSet.getDate("ngay_ket_thuc"));
+                listMatBang.add(matBang);
             }
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return matBang;
+        return listMatBang;
     }
 
-    public MatBang findMatBangByGiaTien(double giaTien) {
-        MatBang matBang = new MatBang();
+    public List<MatBang> findMatBangByGiaTien(double giaTien) {
+        listMatBang = new ArrayList<>();
         try {
             Connection connection = JdbcConnection.getConnection();
             String query = "SELECT * " +
@@ -81,6 +83,7 @@ public class MatBangDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
+                MatBang matBang = new MatBang();
                 matBang.setMaMatBang(resultSet.getString("ma_mat_bang"));
                 matBang.setTrangThai(resultSet.getString("trang_thai"));
                 matBang.setDienTich(resultSet.getFloat("dien_tich"));
@@ -89,16 +92,17 @@ public class MatBangDao {
                 matBang.setGiaTien(resultSet.getDouble("gia_tien"));
                 matBang.setNgayBatDau(resultSet.getDate("ngay_bat_dau"));
                 matBang.setNgayKetThuc(resultSet.getDate("ngay_ket_thuc"));
+                listMatBang.add(matBang);
             }
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return matBang;
+        return listMatBang;
     }
 
-    public MatBang findMatBangByTang(int tang) {
-        MatBang matBang = new MatBang();
+    public List<MatBang> findMatBangByTang(int tang) {
+        listMatBang = new ArrayList<>();
         try {
             Connection connection = JdbcConnection.getConnection();
             String query = "SELECT * " +
@@ -108,6 +112,7 @@ public class MatBangDao {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
+                MatBang matBang = new MatBang();
                 matBang.setMaMatBang(resultSet.getString("ma_mat_bang"));
                 matBang.setTrangThai(resultSet.getString("trang_thai"));
                 matBang.setDienTich(resultSet.getFloat("dien_tich"));
@@ -116,12 +121,13 @@ public class MatBangDao {
                 matBang.setGiaTien(resultSet.getDouble("gia_tien"));
                 matBang.setNgayBatDau(resultSet.getDate("ngay_bat_dau"));
                 matBang.setNgayKetThuc(resultSet.getDate("ngay_ket_thuc"));
+                listMatBang.add(matBang);
             }
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return matBang;
+        return listMatBang;
     }
 
     public boolean kiemTraMaMatBang(String maMatBang) {
@@ -150,6 +156,26 @@ public class MatBangDao {
         ps.setDate(7, new Date(matBang.getNgayBatDau().getTime()));
         ps.setDate(8, new Date(matBang.getNgayKetThuc().getTime()));
         ps.executeUpdate();
+    }
+
+    public boolean xoaMatBang(String maMatBang) {
+        try {
+            Connection connection = JdbcConnection.getConnection();
+            String query = "DELETE FROM mat_bang WHERE ma_mat_bang = ?;";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, maMatBang);
+
+            if (preparedStatement.executeUpdate() > 0) {
+                System.out.println("Xóa mặt bằng thành công");
+                return true;
+            } else {
+                System.out.println("Xóa mặt bằng thất bại");
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
 
